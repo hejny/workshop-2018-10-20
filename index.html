@@ -16,18 +16,19 @@
         const scene = document.getElementById('scene');
         const engine = new Engine(
             scene,
-            new Vector2(0,300),
+            new Vector2(0,0),
             0.5
         );
 
+        const balls = [];
         for(let i=0;i<100;i++){
-            new Ball(
+            balls.push(new Ball(
                 engine,
                 '#906090',
                 Math.random()*10+10,
                 new Vector2(Math.random()*500,Math.random()*500),
                 new Vector2((Math.random()-.5)*100,(Math.random()-.5)*100),
-            );
+            ));
         }
         engine.run();
 
@@ -36,8 +37,8 @@
             if(currentAcceleration){
                 ctx.beginPath();
                 ctx.arc(
-                    currentAcceleration.x*100 + 250,
-                    currentAcceleration.y*100 + 250,
+                    currentAcceleration.x*30 + 250,
+                    currentAcceleration.y*30 + 250,
                     10,
                     0,
                     Math.PI * 2,
@@ -54,6 +55,11 @@
                 event.acceleration.x,
                 event.acceleration.y
             );
+
+            for(const ball of balls){
+                ball.movement.addInPlace(currentAcceleration);
+            }
+
             //debug.innerHTML = event.acceleration.x + ' m/s2';
         });
 
