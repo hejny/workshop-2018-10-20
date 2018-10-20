@@ -12,7 +12,7 @@ window.addEventListener('load', () => {
     const engine = new Engine(
         scene,
         new Vector2(0,0),
-        0.5
+        0.2
     );
 
     const balls = [];

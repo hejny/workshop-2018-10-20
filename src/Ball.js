@@ -55,9 +55,9 @@ export class Ball{
     }
 
     _detectEdges(){
-        if(this.position.x<this.size)this.movement.x*=-1;
-        if(this.position.y<this.size)this.movement.y*=-1;
-        if(this.position.x>this.engine.size.x-this.size)this.movement.x*=-1;
-        if(this.position.y>this.engine.size.y-this.size)this.movement.y*=-1;
+        if(this.position.x<this.size)this.movement.x=Math.abs(this.movement.x);
+        if(this.position.y<this.size)this.movement.y=Math.abs(this.movement.y)
+        if(this.position.x>this.engine.size.x-this.size)this.movement.x=-Math.abs(this.movement.x);
+        if(this.position.y>this.engine.size.y-this.size)this.movement.y=-Math.abs(this.movement.y);
     }
 }
