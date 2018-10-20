@@ -33,15 +33,31 @@ export class Ball{
     }
 
     update(delta){
+
+        this.position.addInPlace(this.movement.scale(delta));
+        this.movement.addInPlace(this.engine.gravity.scale(delta))
+        this.movement.scaleInPlace(Math.pow(this.engine.friction,delta));
+        
+
+        /*
         this.position.x += this.movement.x * delta;
         this.position.y += this.movement.y * delta;
+
+        this.movement.x += this.engine.gravity.x * delta;
+        this.movement.y += this.engine.gravity.y * delta;
+
+        this.movement.x *= Math.pow(this.engine.friction,delta);
+        this.movement.y *= Math.pow(this.engine.friction,delta);
+        */
+
+
         this._detectEdges();
     }
 
     _detectEdges(){
-        if(this.position.x<0)this.movement.x*=-1;
-        if(this.position.y<0)this.movement.y*=-1;
-        if(this.position.x>this.engine.size.x)this.movement.x*=-1;
-        if(this.position.y>this.engine.size.y)this.movement.y*=-1;
+        if(this.position.x<this.size)this.movement.x*=-1;
+        if(this.position.y<this.size)this.movement.y*=-1;
+        if(this.position.x>this.engine.size.x-this.size)this.movement.x*=-1;
+        if(this.position.y>this.engine.size.y-this.size)this.movement.y*=-1;
     }
 }

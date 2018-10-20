@@ -1,8 +1,10 @@
 import { Vector2 } from "./Vector2.js";
 
 export class Engine{
-    constructor(canvas){
+    constructor(canvas,gravity,friction){
         this.canvas = canvas;
+        this.gravity = gravity;
+        this.friction = friction;
         this.objects = [];
     }
 
