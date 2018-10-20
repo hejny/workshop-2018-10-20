@@ -4,28 +4,32 @@ import { Vector2 } from "./Vector2.js";
 export class Engine{
     constructor(canvas){
         this.canvas = canvas;
+        this.objects = [];
     }
 
     run(){
         const ctx = this.canvas.getContext('2d');
 
-        const ball = new Ball(
-            '#906090',
-            new Vector2(100,100)
-        );
-
         let timeLast = null;
-        function loop(time){
+        const loop = (time)=>{
             ctx.clearRect(0,0,scene.width,scene.height);
-            if(timeLast){
-                ball.update((timeLast-time)/1000);
+
+            for(const object of this.objects){
+                if(timeLast){
+                    object.update((time-timeLast)/1000);
+                }
+                object.render(ctx);
             }
+
             timeLast = time;
-            ball.render(ctx);
             requestAnimationFrame(loop);
         }
 
         requestAnimationFrame(loop);
+    }
+
+    addObject(object){
+        this.objects.push(object);
     }
 }
 

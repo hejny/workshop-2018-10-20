@@ -9,11 +9,22 @@
     <canvas width="500" height="500" id="scene"></canvas>
     <script type="module">
         import { Engine } from './src/Engine.js';
+        import { Ball } from './src/Ball.js';
+        import { Vector2 } from './src/Vector2.js';
 
         const scene = document.getElementById('scene');
         const engine = new Engine(scene);
+
+        for(let i=0;i<4;i++){
+            engine.addObject(new Ball(
+                '#906090',
+                Math.random()*10+10,
+                new Vector2(Math.random()*500,Math.random()*500),
+                new Vector2((Math.random()-.5)*100,(Math.random()-.5)*100),
+            ));
+        }
         engine.run();
-        
+
     </script>
   </body>
 </html>

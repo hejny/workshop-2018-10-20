@@ -1,7 +1,9 @@
 export class Ball{
-    constructor(color,position){
+    constructor(color,size,position,movement){
         this.color = color;
+        this.size = size;
         this.position = position;
+        this.movement = movement;
     }
 
     render(ctx){
@@ -10,7 +12,7 @@ export class Ball{
         ctx.arc(
             this.position.x,
             this.position.y,
-            60,
+            this.size,
             0,
             Math.PI * 2,
             true,
@@ -28,6 +30,7 @@ export class Ball{
     }
 
     update(delta){
-        this.position.y -= delta*100;
+        this.position.x += this.movement.x * delta;
+        this.position.y += this.movement.y * delta;
     }
 }
