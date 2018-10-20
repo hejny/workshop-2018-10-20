@@ -27,7 +27,7 @@ window.addEventListener('load', () => {
     }
     engine.run();
 
-    let currentAcceleration = new Vector2(0,0);
+    /*let currentAcceleration = new Vector2(0,0);
     engine.enhance((ctx)=>{
         if(currentAcceleration){
             ctx.beginPath();
@@ -42,20 +42,31 @@ window.addEventListener('load', () => {
             ctx.fillStyle='#ff0000';
             ctx.fill();
         }
-    });
+    });*/
 
     const debug = document.getElementById('debug');
-    window.addEventListener('devicemotion', function(event) {
-        currentAcceleration = new Vector2(
+    window.addEventListener('deviceorientation', (event)=>{
+
+
+        for(const ball of balls){
+            ball.movement.addInPlace(new Vector2(
+                Math.sin(event.gamma / 180 *Math.PI)*10,
+                Math.sin(event.beta / 180 *Math.PI)*10,
+
+            ));
+        }
+
+        //console.log(event);
+        
+        /*currentAcceleration = new Vector2(
             event.acceleration.x,
             event.acceleration.y
         );
 
         for(const ball of balls){
             ball.movement.addInPlace(currentAcceleration);
-        }
+        }*/
 
-        //debug.innerHTML = event.acceleration.x + ' m/s2';
     });
 
 });
