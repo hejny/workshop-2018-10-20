@@ -7,6 +7,7 @@ const VRHelper = scene.createDefaultVRExperience();
 
 var light1 = new BABYLON.PointLight('light', new BABYLON.Vector3(1,1,1), scene);
 
+const spheres = [];
 for(let i=0;i<666;i++){
 const sphere = BABYLON.MeshBuilder.CreateSphere("sphere", {}, scene);
 sphere.position = new BABYLON.Vector3(
@@ -16,6 +17,7 @@ sphere.position = new BABYLON.Vector3(
 );
 const size = Math.random()*2.5;
 sphere.scaling = new BABYLON.Vector3(size,size,size);
+spheres.push(sphere);
 }
 
 engine.runRenderLoop(function() {
@@ -24,4 +26,30 @@ engine.runRenderLoop(function() {
 
 window.addEventListener('resize', function() {
   engine.resize();
+});
+
+
+
+window.addEventListener('devicemotion', function(event) {
+    /*currentAcceleration = new Vector2(
+        event.acceleration.x,
+        event.acceleration.y
+    );*/
+
+    for(const sphere of spheres){
+      sphere.position.addInPlace(new BABYLON.Vector3(
+        event.acceleration.y * Math.random(),
+        event.acceleration.z * Math.random(),
+        event.acceleration.x * Math.random(),
+      ));
+
+      for(const axis of ['x','y','z']){
+        if(sphere.position[axis]>50)sphere.position[axis]=-50;
+        if(sphere.position[axis]<-50)sphere.position[axis]=50;
+      }
+
+
+    }
+
+    //debug.innerHTML = event.acceleration.x + ' m/s2';
 });
