@@ -6,6 +6,7 @@ export class Engine{
         this.gravity = gravity;
         this.friction = friction;
         this.objects = [];
+        this.enhancers = [];
     }
 
     run(){
@@ -22,6 +23,10 @@ export class Engine{
                 object.render(ctx);
             }
 
+            for(const enhancer of this.enhancers){
+                enhancer(ctx);
+            }
+
             timeLast = time;
             requestAnimationFrame(loop);
         }
@@ -31,6 +36,10 @@ export class Engine{
 
     addObject(object){
         this.objects.push(object);
+    }
+
+    enhance(enhancer){
+        this.enhancers.push(enhancer);
     }
 
     get size(){

@@ -7,6 +7,7 @@
   </head>
   <body>
     <canvas width="500" height="500" id="scene"></canvas>
+    <div id="debug">debug</div>
     <script type="module">
         import { Engine } from './src/Engine.js';
         import { Ball } from './src/Ball.js';
@@ -30,8 +31,30 @@
         }
         engine.run();
 
+        let currentAcceleration = new Vector2(0,0);
+        engine.enhance((ctx)=>{
+            if(currentAcceleration){
+                ctx.beginPath();
+                ctx.arc(
+                    currentAcceleration.x*100 + 250,
+                    currentAcceleration.y*100 + 250,
+                    10,
+                    0,
+                    Math.PI * 2,
+                    true,
+                );
+                ctx.fillStyle='#ff0000';
+                ctx.fill();
+            }
+        });
+
+        const debug = document.getElementById('debug');
         window.addEventListener('devicemotion', function(event) {
-            console.log(event.acceleration.x + ' m/s2');
+            currentAcceleration = new Vector2(
+                event.acceleration.x,
+                event.acceleration.y
+            );
+            //debug.innerHTML = event.acceleration.x + ' m/s2';
         });
 
     </script>
