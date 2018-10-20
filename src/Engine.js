@@ -1,4 +1,3 @@
-import { Ball } from "./Ball.js";
 import { Vector2 } from "./Vector2.js";
 
 export class Engine{
@@ -30,6 +29,12 @@ export class Engine{
 
     addObject(object){
         this.objects.push(object);
+    }
+
+    get size(){
+        return(new Vector2(
+            scene.width,scene.height
+        ));
     }
 }
 

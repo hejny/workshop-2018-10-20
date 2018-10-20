@@ -15,13 +15,14 @@
         const scene = document.getElementById('scene');
         const engine = new Engine(scene);
 
-        for(let i=0;i<4;i++){
-            engine.addObject(new Ball(
+        for(let i=0;i<100;i++){
+            new Ball(
+                engine,
                 '#906090',
                 Math.random()*10+10,
                 new Vector2(Math.random()*500,Math.random()*500),
                 new Vector2((Math.random()-.5)*100,(Math.random()-.5)*100),
-            ));
+            );
         }
         engine.run();
 
