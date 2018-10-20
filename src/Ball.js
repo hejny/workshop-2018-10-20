@@ -1,14 +1,4 @@
-
-
-class Vector2{
-    constructor(x,y){
-        this.x = x;
-        this.y = y;
-    }
-}
-
-
-class Ball{
+export class Ball{
     constructor(color,position){
         this.color = color;
         this.position = position;
@@ -41,35 +31,3 @@ class Ball{
         this.position.y -= delta*100;
     }
 }
-
-
-//-----------------------------------------------------
-
-
-const scene = document.getElementById('scene');
-const ctx = scene.getContext('2d');
-
-const ball = new Ball(
-    '#906090',
-    new Vector2(100,100)
-);
-
-let timeLast = null;
-function loop(time){
-    ctx.clearRect(0,0,scene.width,scene.height);
-    if(timeLast){
-        ball.update((timeLast-time)/1000);
-    }
-    timeLast = time;
-    ball.render(ctx);
-    requestAnimationFrame(loop);
-}
-
-
-
-requestAnimationFrame(loop);
-
-
-
-
-

@@ -6,7 +6,14 @@
     <link rel="stylesheet" href="./index.css"/>
   </head>
   <body>
-      <canvas width="500" height="500" id="scene"></canvas>
-    <script src="./index.js"></script>
+    <canvas width="500" height="500" id="scene"></canvas>
+    <script type="module">
+        import { Engine } from './src/Engine.js';
+
+        const scene = document.getElementById('scene');
+        const engine = new Engine(scene);
+        engine.run();
+        
+    </script>
   </body>
 </html>
