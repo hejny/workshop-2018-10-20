@@ -1,10 +1,11 @@
 import { Vector2 } from "./Vector2.js";
 
 export class Engine{
-    constructor(canvas,gravity,friction){
+    constructor(canvas,options){
         this.canvas = canvas;
-        this.gravity = gravity;
-        this.friction = friction;
+        this.gravity = options.gravity;
+        this.friction = options.friction;
+        this.iterations = options.iterations;
         this.objects = [];
         this.enhancers = [];
     }
@@ -18,7 +19,7 @@ export class Engine{
                     object.update((time-timeLast)/1000);
                 }
             }
-            for(let i=0;i<3;i++){
+            for(let i=0;i<this.iterations;i++){
                 for(const object of this.objects){
                     object.applyCollisions();
                 }

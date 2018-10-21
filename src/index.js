@@ -11,8 +11,11 @@ window.addEventListener('load', () => {
     scene.height = height;
     const engine = new Engine(
         scene,
-        new Vector2(0,100),
-        0.2
+        {
+            gravity: new Vector2(0,100),
+            friction: 0.2,
+            iterations: 5
+        }
     );
 
     const balls = [];
