@@ -19,11 +19,26 @@ export class Engine{
                     object.update((time-timeLast)/1000);
                 }
             }
-            for(let i=0;i<this.iterations;i++){
-                for(const object of this.objects){
+            //for(let i=0;i<this.iterations;i++){
+                let order = 0;
+                for(const object of this.objects.sort((a,b)=>{
+                    const d1 = this.gravity.normalized;
+                    const d2 = a.position.subtract(b.position).normalized
+
+                    if(d1.add(d2).length>Math.sqrt(2)){
+                        return -1;
+                    }else{
+                        return 1;
+                    }
+                
+                })){
+                    order ++;
+                    //object.label = order++;
+                    const a = order/this.objects.length*255;
+                    object.color = `rgb(${a},${a},${a})`;
                     object.applyCollisions();
                 }
-            }
+            //}
             timeLast = time;
             requestAnimationFrame(updateLoop);
         }

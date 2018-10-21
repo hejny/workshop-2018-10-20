@@ -15,6 +15,13 @@ export class Vector2{
         return Math.sqrt(Math.pow(vector2_1.x-vector2_2.x,2)+Math.pow(vector2_1.y-vector2_2.y,2));
     }
 
+    clone(){
+        return new Vector2(
+            this.x,
+            this.y
+        );
+    }
+
     addInPlace(vector2){
         this.x += vector2.x;
         this.y += vector2.y;
@@ -63,11 +70,19 @@ export class Vector2{
         return Vector2.distance(this,Vector2.Zero());
     }
 
-    lengthInPlace(length){
+    get normalized(){
+        return this.toLength(1);
+    }
+
+    toLengthInPlace(length){
         if(this.length!==0){
             this.scaleInPlace(length/this.length);
         }
         return this;
+    }
+
+    toLength(length){
+        return this.clone().toLengthInPlace(length);
     }
 
 

@@ -16,7 +16,7 @@ window.addEventListener('load', () => {
         {
             gravity: new Vector2(0,100),
             friction: 0.2,
-            iterations: 5
+            iterations: 10
         }
     );
 
@@ -32,53 +32,27 @@ window.addEventListener('load', () => {
     }
     engine.run();
 
-    /*let currentAcceleration = new Vector2(0,0);
-    engine.enhance((ctx)=>{
-        if(currentAcceleration){
-            ctx.beginPath();
-            ctx.arc(
-                currentAcceleration.x*30 + 250,
-                currentAcceleration.y*30 + 250,
-                10,
-                0,
-                Math.PI * 2,
-                true,
-            );
-            ctx.fillStyle='#ff0000';
-            ctx.fill();
-        }
-    });*/
-
-    //const debug = document.getElementById('debug');
-    window.addEventListener('deviceorientation', (event)=>{
-
-
-        engine.gravity = new Vector2(
+    let gravityByOrientation = Vector2.Zero();
+    /*window.addEventListener('deviceorientation', (event)=>{
+        gravityByOrientation = new Vector2(
             Math.sin(event.gamma / 180 *Math.PI)*1000,
             Math.sin(event.beta / 180 *Math.PI)*1000,
 
         );
+        updateGravity();
+    });*/
 
-        /*
-        for(const ball of balls){
-            ball.movement.addInPlace(new Vector2(
-                Math.sin(event.gamma / 180 *Math.PI)*10,
-                Math.sin(event.beta / 180 *Math.PI)*10,
+    let gravityByMotion = Vector2.Zero();
+    window.addEventListener('devicemotion', (event)=>{
+        gravityByMotion = new Vector2(
+            event.accelerationIncludingGravity.x*-1000,
+            event.accelerationIncludingGravity.y*1000,
 
-            ));
-        }
-
-        //console.log(event);
-        
-        /*currentAcceleration = new Vector2(
-            event.acceleration.x,
-            event.acceleration.y
         );
-
-        for(const ball of balls){
-            ball.movement.addInPlace(currentAcceleration);
-        }*/
-
+        updateGravity();
     });
-
+    
+    function updateGravity(){
+        engine.gravity = Vector2.Zero().addInPlace(gravityByOrientation).addInPlace(gravityByMotion);
+    }
 });

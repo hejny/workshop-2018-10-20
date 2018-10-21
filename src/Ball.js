@@ -7,6 +7,7 @@ export class Ball{
         this.size = size;
         this.position = position;
         this.movement = movement;
+        this.label = '';
 
         engine.addObject(this);
     }
@@ -32,6 +33,12 @@ export class Ball{
 
         //ctx.stroke();
         ctx.fill();
+
+        if(this.label){
+            ctx.font = "30px Arial";
+            ctx.fillStyle='white';
+            ctx.fillText(this.label,this.position.x,this.position.y);
+        } 
     }
 
     update(delta){
@@ -47,7 +54,7 @@ export class Ball{
         for(const object of this.engine.objects){
             if(this.collideWith(object)){
                 this.position = object.position.add(
-                    this.position.subtract(object.position).lengthInPlace(this.size+object.size)
+                    this.position.subtract(object.position).toLengthInPlace(this.size+object.size)
                 )
 
             }
