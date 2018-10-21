@@ -2,6 +2,8 @@ import { Engine } from './Engine.js';
 import { Ball } from './Ball.js';
 import { Vector2 } from './Vector2.js';
 
+//https://coolors.co/
+const COLORS = 'edae49-d1495b-00798c-30638e-003d5b'.split('-').map((color)=>`#${color}`);
 
 window.addEventListener('load', () => {
     
@@ -22,7 +24,7 @@ window.addEventListener('load', () => {
     for(let i=0;i<10;i++){
         balls.push(new Ball(
             engine,
-            '#906090',
+            COLORS[Math.floor(Math.random()*COLORS.length)],
             Math.random()*10+10,
             new Vector2(Math.random()*engine.size.x,Math.random()*engine.size.y),
             new Vector2((Math.random()-.5)*100,(Math.random()-.5)*100),
