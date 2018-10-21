@@ -1,3 +1,5 @@
+import { Vector2 } from "./Vector2.js";
+
 export class Ball{
     constructor(engine,color,size,position,movement){
         this.engine = engine;
@@ -26,9 +28,9 @@ export class Ball{
         }*/
 
         ctx.fillStyle=this.color;
-        ctx.lineWidth = 5;
+        //ctx.lineWidth = 5;
 
-        ctx.stroke();
+        //ctx.stroke();
         ctx.fill();
     }
 
@@ -37,27 +39,29 @@ export class Ball{
         this.position.addInPlace(this.movement.scale(delta));
         this.movement.addInPlace(this.engine.gravity.scale(delta))
         this.movement.scaleInPlace(Math.pow(this.engine.friction,delta));
-        
 
-        /*
-        this.position.x += this.movement.x * delta;
-        this.position.y += this.movement.y * delta;
-
-        this.movement.x += this.engine.gravity.x * delta;
-        this.movement.y += this.engine.gravity.y * delta;
-
-        this.movement.x *= Math.pow(this.engine.friction,delta);
-        this.movement.y *= Math.pow(this.engine.friction,delta);
-        */
-
-
-        this._detectEdges();
     }
 
-    _detectEdges(){
-        if(this.position.x<this.size)this.movement.x=Math.abs(this.movement.x);
-        if(this.position.y<this.size)this.movement.y=Math.abs(this.movement.y)
-        if(this.position.x>this.engine.size.x-this.size)this.movement.x=-Math.abs(this.movement.x);
-        if(this.position.y>this.engine.size.y-this.size)this.movement.y=-Math.abs(this.movement.y);
+    applyCollisions(){
+
+        for(const object of this.engine.objects){
+            if(this.collideWith(object)){
+                this.position = object.position.add(
+                    this.position.subtract(object.position).lengthInPlace(this.size+object.size)
+                )
+
+            }
+        }
+
+        if(this.position.x<this.size)this.position.x = this.size;
+        if(this.position.y<this.size)this.position.y = this.size;
+        if(this.position.x>this.engine.size.x-this.size)this.position.x = this.engine.size.x-this.size;
+        if(this.position.y>this.engine.size.y-this.size)this.position.y = this.engine.size.y-this.size;
+
+
+    }
+
+    collideWith(ball){
+        return Vector2.distance(this.position,ball.position)<this.size+ball.size;
     }
 }

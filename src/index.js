@@ -11,12 +11,12 @@ window.addEventListener('load', () => {
     scene.height = height;
     const engine = new Engine(
         scene,
-        new Vector2(0,0),
+        new Vector2(0,100),
         0.2
     );
 
     const balls = [];
-    for(let i=0;i<100;i++){
+    for(let i=0;i<10;i++){
         balls.push(new Ball(
             engine,
             '#906090',
@@ -44,10 +44,17 @@ window.addEventListener('load', () => {
         }
     });*/
 
-    const debug = document.getElementById('debug');
+    //const debug = document.getElementById('debug');
     window.addEventListener('deviceorientation', (event)=>{
 
 
+        engine.gravity = new Vector2(
+            Math.sin(event.gamma / 180 *Math.PI)*1000,
+            Math.sin(event.beta / 180 *Math.PI)*1000,
+
+        );
+
+        /*
         for(const ball of balls){
             ball.movement.addInPlace(new Vector2(
                 Math.sin(event.gamma / 180 *Math.PI)*10,

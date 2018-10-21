@@ -10,28 +10,36 @@ export class Engine{
     }
 
     run(){
-        const ctx = this.canvas.getContext('2d');
-
+        
         let timeLast = null;
-        const loop = (time)=>{
-            ctx.clearRect(0,0,scene.width,scene.height);
-
+        const updateLoop = (time)=>{
             for(const object of this.objects){
                 if(timeLast){
                     object.update((time-timeLast)/1000);
                 }
+            }
+            for(let i=0;i<3;i++){
+                for(const object of this.objects){
+                    object.applyCollisions();
+                }
+            }
+            timeLast = time;
+            requestAnimationFrame(updateLoop);
+        }
+        updateLoop();
+
+        const ctx = this.canvas.getContext('2d');
+        const renderLoop = ()=>{
+            ctx.clearRect(0,0,scene.width,scene.height);
+            for(const object of this.objects){
                 object.render(ctx);
             }
-
             for(const enhancer of this.enhancers){
                 enhancer(ctx);
             }
-
-            timeLast = time;
-            requestAnimationFrame(loop);
+            requestAnimationFrame(renderLoop);
         }
-
-        requestAnimationFrame(loop);
+        renderLoop();
     }
 
     addObject(object){
